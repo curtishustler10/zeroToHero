@@ -1,0 +1,5 @@
+id,user_id,date,type,duration_min,notes,created_at
+1,550e8400-e29b-41d4-a716-446655440000,2024-01-01,strength-training,45,Full body workout. Felt strong and energized. PRed on deadlifts!,2024-01-01T07:00:00Z
+2,550e8400-e29b-41d4-a716-446655440000,2024-01-02,cardio,30,Morning run around the neighborhood. Great way to start the day.,2024-01-02T06:30:00Z
+3,550e8400-e29b-41d4-a716-446655440001,2024-01-01,yoga,60,Relaxing yoga session. Focused on flexibility and mindfulness.,2024-01-01T18:00:00Z
+4,550e8400-e29b-41d4-a716-446655440001,2024-01-02,hiit,25,Quick HIIT session. High intensity but very effective!,2024-01-02T07:00:00Z

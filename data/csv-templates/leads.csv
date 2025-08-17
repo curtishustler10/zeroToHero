@@ -1,0 +1,5 @@
+id,user_id,name,business,niche,source,status,priority,next_action_date,notes,created_at
+1,550e8400-e29b-41d4-a716-446655440000,Sarah Johnson,Tech Startup Solutions,SaaS,LinkedIn,New,4,2024-01-03,CEO of growing SaaS company. Interested in productivity consulting.,2024-01-01T12:00:00Z
+2,550e8400-e29b-41d4-a716-446655440000,Mike Chen,FitLife Coaching,Fitness,Referral,Contacted,5,2024-01-05,Fitness coach looking to scale online. Very motivated and budget confirmed.,2024-01-01T14:30:00Z
+3,550e8400-e29b-41d4-a716-446655440000,Emma Davis,Creative Agency,Design,Cold Email,Booked,3,2024-01-04,Design agency owner. Meeting scheduled for strategy session.,2024-01-02T09:00:00Z
+4,550e8400-e29b-41d4-a716-446655440001,Alex Rodriguez,Local Restaurant Chain,Food Service,Networking Event,New,2,2024-01-06,Restaurant owner interested in marketing automation.,2024-01-02T16:00:00Z

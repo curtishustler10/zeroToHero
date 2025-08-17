@@ -1,0 +1,5 @@
+id,user_id,date,kind,url,caption,minutes_spent,created_at
+1,550e8400-e29b-41d4-a716-446655440000,2024-01-01,post,https://linkedin.com/posts/johndoe123,Just shared my morning routine that's been transforming my productivity! 🚀 #productivity #habits,45,2024-01-01T10:00:00Z
+2,550e8400-e29b-41d4-a716-446655440000,2024-01-02,video,https://youtube.com/watch?v=abc123,Behind the scenes of my deep work session - no distractions for 2 hours straight!,120,2024-01-02T14:30:00Z
+3,550e8400-e29b-41d4-a716-446655440001,2024-01-01,article,https://medium.com/@janesmith/my-journey,My 30-day transformation journey begins today. Here's what I'm committing to...,90,2024-01-01T11:00:00Z
+4,550e8400-e29b-41d4-a716-446655440001,2024-01-02,post,https://twitter.com/janesmith/status/123,Day 2: Already seeing the power of consistent small actions. Momentum is building! 💪,30,2024-01-02T16:00:00Z

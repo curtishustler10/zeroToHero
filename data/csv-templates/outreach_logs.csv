@@ -1,0 +1,6 @@
+id,user_id,lead_id,date,channel,notes,outcome,created_at
+1,550e8400-e29b-41d4-a716-446655440000,1,2024-01-01,linkedin,Sent personalized connection request mentioning their recent product launch.,sent,2024-01-01T15:00:00Z
+2,550e8400-e29b-41d4-a716-446655440000,1,2024-01-02,linkedin,Follow-up message with case study relevant to their industry.,reply,2024-01-02T10:00:00Z
+3,550e8400-e29b-41d4-a716-446655440000,2,2024-01-01,email,Initial outreach email with fitness industry insights and free resource.,reply,2024-01-01T16:30:00Z
+4,550e8400-e29b-41d4-a716-446655440000,2,2024-01-02,phone,Discovery call to understand their challenges and goals.,booked,2024-01-02T11:00:00Z
+5,550e8400-e29b-41d4-a716-446655440000,3,2024-01-02,email,Cold email with design agency case study and portfolio.,booked,2024-01-02T14:00:00Z

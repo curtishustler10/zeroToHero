@@ -1,0 +1,5 @@
+id,user_id,time,name,payload,created_at
+1,550e8400-e29b-41d4-a716-446655440000,2024-01-01T10:00:00Z,habit_completed,"{""habit_id"": 1, ""value"": 1, ""streak"": 1}",2024-01-01T10:00:00Z
+2,550e8400-e29b-41d4-a716-446655440000,2024-01-01T15:30:00Z,lead_created,"{""lead_id"": 1, ""source"": ""linkedin"", ""priority"": 4}",2024-01-01T15:30:00Z
+3,550e8400-e29b-41d4-a716-446655440000,2024-01-02T11:00:00Z,deal_closed,"{""deal_id"": 1, ""amount"": 5000, ""lead_id"": 2}",2024-01-02T11:00:00Z
+4,550e8400-e29b-41d4-a716-446655440001,2024-01-01T09:00:00Z,story_drafted,"{""story_id"": 3, ""archetype"": ""failure"", ""word_count"": 250}",2024-01-01T09:00:00Z

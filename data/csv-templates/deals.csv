@@ -1,0 +1,4 @@
+id,user_id,lead_id,amount,cogs,date,source,notes,created_at
+1,550e8400-e29b-41d4-a716-446655440000,2,5000.00,500.00,2024-01-03,Referral,3-month productivity coaching package for fitness coach. Includes weekly sessions and custom system setup.,2024-01-03T10:00:00Z
+2,550e8400-e29b-41d4-a716-446655440000,3,3500.00,200.00,2024-01-04,Cold Email,Strategy session and 2-month implementation support for design agency.,2024-01-04T15:30:00Z
+3,550e8400-e29b-41d4-a716-446655440001,4,2500.00,150.00,2024-01-05,Networking Event,Marketing automation setup for restaurant chain. One-time implementation fee.,2024-01-05T12:00:00Z
