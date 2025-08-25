@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Self-Love • Home</title>
+<style>
+  :root{
+    --bg:#0E3A3B;        /* deep teal */
+    --card:#112f30;
+    --card-2:#0f2a2b;
+    --text:#F9FAFB;
+    --muted:#B7C6C7;
+    --mint:#B7F0E7;
+    --peach:#FFC6A8;
+    --sand:#F4EDE1;
+    --accent:#4EE1C1;
+    --danger:#ff7a7a;
+    --ring:#2bd2b2;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 800px at 50% -10%, #104244 0%, var(--bg) 60%);
+    color:var(--text);
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:20px 16px 72px}
+  header{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:10px}
+  .avatar{
+    width:148px;height:148px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.12);
+    position:relative;box-shadow:0 0 0 6px rgba(78,225,193,.08), 0 10px 30px rgba(0,0,0,.35);
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .aura{position:absolute;inset:-8px;border-radius:50%;
+    box-shadow:0 0 40px 8px rgba(78,225,193,.25); pointer-events:none; opacity:.6}
+  .credo{opacity:.9;font-size:.92rem;text-align:center}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;background:#153b3d;border:1px solid rgba(255,255,255,.08);
+       color:var(--text);padding:.5rem .8rem;border-radius:12px;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 8px}
+  .stat{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px}
+  .stat .k{opacity:.8;font-size:.8rem}
+  .stat .v{font-weight:700;margin-top:2px}
+  h2{font-size:1.05rem;margin:14px 4px}
+  .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:10px 10px 6px;margin:8px 0}
+  .list{list-style:none;margin:6px 0 2px;padding:0}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:12px}
+  .row:hover{background:rgba(255,255,255,.03)}
+  .label{display:flex;align-items:center;gap:.6rem}
+  .badge{font-size:.75rem;color:#0b2; background:rgba(183,240,231,.15); padding:.15rem .45rem;border-radius:999px;border:1px solid rgba(183,240,231,.35)}
+  .check{width:28px;height:28px;border-radius:50%;border:2px solid var(--ring);display:grid;place-items:center;cursor:pointer}
+  .check[data-on="true"]{background:var(--accent)}
+  .sub{opacity:.8;font-size:.86rem}
+  .bar{height:8px;background:#0b2627;border-radius:999px;overflow:hidden}
+  .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#66f4d9);width:0%}
+  .affirm{background:linear-gradient(180deg, rgba(255,198,168,.18), rgba(78,225,193,.1));border:1px solid rgba(255,255,255,.08);
+          padding:12px;border-radius:14px;text-align:center;margin:10px 0}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .muted{color:var(--muted)}
+  .footer{position:fixed;inset:auto 0 0; backdrop-filter: blur(6px);
+          background:linear-gradient(180deg, rgba(14,58,59,.0), rgba(14,58,59,.75));
+          padding:10px 14px;border-top:1px solid rgba(255,255,255,.08)}
+  .primary{background:var(--accent);color:#002d27;border:none;padding:12px 16px;border-radius:14px;font-weight:700;width:100%}
+  details.settings summary{cursor:pointer;opacity:.9}
+  input[type="number"], input[type="text"]{width:100%;background:#123; color:#eaf7f6;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px}
+  .tiny{font-size:.75rem;opacity:.85}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="avatar" id="avatar">
+        <span class="aura" id="aura"></span>
+        <img id="avatarImg" alt="Avatar" src="https://images.unsplash.com/photo-1542300054-977e90c0b37c?q=80&w=800&auto=format&fit=crop" />
+      </div>
+      <div>
+        <button class="btn" id="uploadBtn">Change avatar</button>
+        <input type="file" id="fileIn" accept="image/*" hidden />
+      </div>
+      <div class="credo tiny">“Self-love builds every other love.”</div>
+    </header>
+
+    <section class="grid-3" id="statsRow">
+      <div class="stat">
+        <div class="k">🔥 Basics streak</div>
+        <div class="v" id="streakVal">0 days</div>
+      </div>
+      <div class="stat">
+        <div class="k">🌟 Today</div>
+        <div class="v"><span id="todayPct">0</span>% completed</div>
+      </div>
+      <div class="stat">
+        <div class="k">🏆 100-day challenge</div>
+        <div class="v"><span id="challengeDay">0</span> / 100</div>
+        <div class="tiny muted">(need ≥ 90% avg daily)</div>
+      </div>
+    </section>
+
+    <div class="affirm" id="affirm">Proud of you showing up today.</div>
+
+    <section class="card">
+      <h2>Basics</h2>
+      <ul class="list" id="basicsList"></ul>
+      <div class="tiny muted" style="margin:8px 6px 10px">Daily basics completion</div>
+      <div class="bar"><span id="basicsBar"></span></div>
+    </section>
+
+    <section class="two-col">
+      <div class="card">
+        <h2>Gym <span class="badge">Keep going 💪</span></h2>
+        <div class="sub">Goal: <span id="gymGoal">5</span>/7 — Current: <span id="gymCurr">0</span></div>
+        <div class="bar" style="margin-top:8px"><span id="gymBar"></span></div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn" id="gymAdd">+1 session</button>
+          <button class="btn" id="gymUndo">Undo</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Savings <span class="badge">Great start 🌱</span></h2>
+        <div class="sub">Weekly goal: $<span id="saveGoal">150</span> — LT goal: $<span id="saveLT">10000</span></div>
+        <div class="sub">Current: $<span id="saveCurr">0</span></div>
+        <div class="bar" style="margin-top:8px"><span id="saveBar"></span></div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn" id="saveAdd">$+10</button>
+          <button class="btn" id="saveUndo">Undo</button>
+        </div>
+      </div>
+    </section>
+
+    <details class="card settings" style="margin-top:10px">
+      <summary>Settings</summary>
+      <div style="display:grid;gap:10px;margin-top:10px">
+        <label class="tiny">Avatar URL <input type="text" id="avatarUrl" placeholder="https://…"/></label>
+        <label class="tiny">Gym weekly goal <input type="number" id="gymGoalIn" min="1" value="5"/></label>
+        <label class="tiny">Savings weekly goal ($) <input type="number" id="saveGoalIn" min="0" value="150"/></label>
+        <label class="tiny">Savings long-term goal ($) <input type="number" id="saveLTIn" min="0" value="10000"/></label>
+        <button class="btn" id="applyBtn">Apply</button>
+      </div>
+    </details>
+  </div>
+
+  <footer class="footer">
+    <button class="primary" id="markWins">Mark Today’s Wins</button>
+  </footer>
+
+<script>
+/* ---------- tiny state layer (localStorage) ---------- */
+const todayKey = () => new Date().toISOString().slice(0,10); // YYYY-MM-DD
+const LSKEY = "selflove.mainscreen.v1";
+
+const defaultState = {
+  version:1,
+  avatarUrl:"",
+  streakDays:0,
+  challengeDay:0,               // how many days logged so far (max 100 in MVP)
+  perDay:{},                    // map YYYY-MM-DD -> {basics:{id:count}, totals:{needed,done}}
+  basics:[
+    {id:"cook",     label:"🍳 Cooking",             needed:1},
+    {id:"clean",    label:"🧽 Cleaning right after",needed:1},
+    {id:"shower",   label:"🚿 Shower",              needed:1},
+    {id:"teeth",    label:"🪥 Teeth brushing",      needed:2},
+    {id:"water",    label:"💧 1 bottle water",      needed:1},
+    {id:"walk",     label:"🚶‍♂️ Walk & breathe",   needed:1}
+  ],
+  gym:{goalPerWeek:5, current:0},
+  savings:{goalPerWeek:150, longTerm:10000, current:0}
+};
+
+let S = JSON.parse(localStorage.getItem(LSKEY) || "null") || defaultState;
+
+function save(){ localStorage.setItem(LSKEY, JSON.stringify(S)); }
+function getToday(){
+  const k = todayKey();
+  if(!S.perDay[k]){
+    S.perDay[k] = { basics: Object.fromEntries(S.basics.map(b=>[b.id,0])), totals:{needed: S.basics.reduce((a,b)=>a+b.needed,0), done:0} };
+    // increment challengeDay only once per new calendar day opened
+    S.challengeDay = Math.min(100, (S.challengeDay||0) + 1);
+    save();
+  }
+  return S.perDay[k];
+}
+
+/* ---------- UI bindings ---------- */
+const aura = document.getElementById("aura");
+const avatarImg = document.getElementById("avatarImg");
+const stats = {
+  streakVal: document.getElementById("streakVal"),
+  todayPct: document.getElementById("todayPct"),
+  challengeDay: document.getElementById("challengeDay"),
+  basicsBar: document.getElementById("basicsBar"),
+  affirm: document.getElementById("affirm")
+};
+const basicsList = document.getElementById("basicsList");
+
+/* build basics rows with recurrence checks */
+function renderBasics(){
+  const T = getToday();
+  basicsList.innerHTML = "";
+  for(const b of S.basics){
+    const li = document.createElement("li");
+    const done = T.basics[b.id]||0;
+    const row = document.createElement("div"); row.className="row";
+    const label = document.createElement("div"); label.className="label";
+    label.innerHTML = `<span>${b.label}</span><span class="tiny muted">x${b.needed}</span>`;
+    const checks = document.createElement("div"); checks.style.display="flex"; checks.style.gap="8px";
+    for(let i=0;i<b.needed;i++){
+      const c = document.createElement("div"); c.className="check"; c.dataset.on = String(i<done);
+      c.addEventListener("click", () => {
+        let v = T.basics[b.id]||0;
+        if(i < v){ v = i; } else { v = Math.min(b.needed, i+1); }
+        T.basics[b.id] = v;
+        T.totals.done = S.basics.reduce((a,x)=>a+(T.basics[x.id]||0),0);
+        save(); updateStats(); renderBasics();
+      });
+      checks.appendChild(c);
+    }
+    row.append(label, checks); li.appendChild(row); basicsList.appendChild(li);
+  }
+}
+
+/* compute percent, streak and aura */
+function pctToday(){
+  const T = getToday();
+  return Math.round( (T.totals.done / T.totals.needed) * 100 );
+}
+
+/* recompute streak: consecutive days with >= 90% */
+function recomputeStreak(){
+  const days = Object.keys(S.perDay).sort().reverse();
+  let streak = 0;
+  for(const d of days){
+    const t = S.perDay[d];
+    const p = Math.round((t.totals.done / t.totals.needed)*100);
+    if(p >= 90) streak++; else break;
+  }
+  S.streakDays = streak; save(); return streak;
+}
+
+function updateStats(){
+  const p = pctToday();
+  stats.todayPct.textContent = isFinite(p) ? p : 0;
+  stats.challengeDay.textContent = S.challengeDay || 0;
+  stats.basicsBar.style.width = (isFinite(p)?p:0) + "%";
+  const streak = recomputeStreak();
+  stats.streakVal.textContent = `${streak} day${streak===1?"":"s"}`;
+  aura.style.boxShadow = `0 0 ${20 + p/2}px ${6 + p/30}px rgba(78,225,193,${0.15 + p/300})`;
+  // affirmation rotation by thresholds
+  stats.affirm.textContent =
+    p >= 90 ? "Beautiful consistency. Your future self is smiling. ✨" :
+    p >= 60 ? "Great momentum. A couple more checks and you’re there. 💚" :
+    "Tiny steps count today. One check now changes your slope. 🌱";
+}
+
+/* gym & savings cards */
+const gymBar = document.getElementById("gymBar");
+function renderGym(){
+  const pct = Math.min(100, Math.round((S.gym.current / S.gym.goalPerWeek) * 100));
+  document.getElementById("gymGoal").textContent = S.gym.goalPerWeek;
+  document.getElementById("gymCurr").textContent = S.gym.current;
+  gymBar.style.width = pct + "%"; save();
+}
+document.getElementById("gymAdd").onclick = () => { S.gym.current = Math.min(7, S.gym.current + 1); renderGym(); };
+document.getElementById("gymUndo").onclick = () => { S.gym.current = Math.max(0, S.gym.current - 1); renderGym(); };
+
+const saveBar = document.getElementById("saveBar");
+function renderSavings(){
+  const pct = S.savings.longTerm>0 ? Math.min(100, Math.round((S.savings.current / S.savings.longTerm) * 100)) : 0;
+  document.getElementById("saveGoal").textContent = S.savings.goalPerWeek;
+  document.getElementById("saveLT").textContent = S.savings.longTerm;
+  document.getElementById("saveCurr").textContent = S.savings.current;
+  saveBar.style.width = pct + "%"; save();
+}
+document.getElementById("saveAdd").onclick = () => { S.savings.current += 10; renderSavings(); };
+document.getElementById("saveUndo").onclick = () => { S.savings.current = Math.max(0, S.savings.current - 10); renderSavings(); };
+
+/* settings apply */
+document.getElementById("applyBtn").onclick = () => {
+  const g = +document.getElementById("gymGoalIn").value || 5;
+  const sg = +document.getElementById("saveGoalIn").value || 150;
+  const slt = +document.getElementById("saveLTIn").value || 10000;
+  const url = document.getElementById("avatarUrl").value.trim();
+  S.gym.goalPerWeek = Math.max(1,g);
+  S.savings.goalPerWeek = Math.max(0,sg);
+  S.savings.longTerm = Math.max(0,slt);
+  if(url){ S.avatarUrl = url; avatarImg.src = url; }
+  renderGym(); renderSavings(); updateStats();
+};
+
+/* avatar upload */
+document.getElementById("uploadBtn").onclick = ()=> document.getElementById("fileIn").click();
+document.getElementById("fileIn").addEventListener("change", e=>{
+  const f = e.target.files?.[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{ avatarImg.src = r.result; S.avatarUrl = r.result; save(); };
+  r.readAsDataURL(f);
+});
+
+/* mark wins CTA: gently scroll to unchecked first */
+document.getElementById("markWins").onclick = ()=>{
+  const T = getToday();
+  const firstNeed = S.basics.find(b => (T.basics[b.id]||0) < b.needed);
+  if(firstNeed){
+    // subtle hint to complete
+    stats.affirm.textContent = "Mark one more win — you’re close! 💫";
+    basicsList.querySelectorAll(".row").forEach(r=> r.style.outline="");
+    const idx = S.basics.indexOf(firstNeed);
+    const row = basicsList.querySelectorAll(".row")[idx];
+    row.scrollIntoView({behavior:"smooth", block:"center"});
+    row.style.outline = "2px dashed rgba(183,240,231,.5)";
+    setTimeout(()=> row.style.outline="", 1500);
+  }else{
+    stats.affirm.textContent = "All basics done. Bask in it. 🌞";
+  }
+};
+
+/* init */
+(function init(){
+  if(S.avatarUrl) avatarImg.src = S.avatarUrl;
+  renderBasics(); renderGym(); renderSavings(); updateStats();
+})();
+</script>
+</body>
+</html>
