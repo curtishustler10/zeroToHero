@@ -26,4 +26,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      
+      <body
+        className={`${spaceGrotesk.variable} ${firaCode.variable} antialiased`}
+      >
+        <div className="min-h-screen text-[--foreground]">
+          <NavBar />
+          <main className="mx-auto max-w-6xl px-6 pb-20 pt-10 sm:px-10">
+            <Link href="/" className="sr-only">
+              Zero to Hero Home
+            </Link>
+            {children}
+          </main>
+        </div>
+      </body>
+    </html>
+  );
+}
