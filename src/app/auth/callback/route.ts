@@ -5,7 +5,16 @@ import { Database } from "@/lib/types";
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
+  const error = requestUrl.searchParams.get("error");
+  const errorDescription = requestUrl.searchParams.get("error_description");
   const redirectTo = requestUrl.searchParams.get("next") || "/";
+
+  // Handle errors from Supabase
+  if (error) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("error", errorDescription || error);
+    return NextResponse.redirect(loginUrl);
+  }
 
   if (!code) {
     return NextResponse.redirect(new URL("/login", request.url));
@@ -31,7 +40,13 @@ export async function GET(request: NextRequest) {
     },
   );
 
-  await supabase.auth.exchangeCodeForSession(code);
+  const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (exchangeError) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("error", exchangeError.message);
+    return NextResponse.redirect(loginUrl);
+  }
 
   return res;
 }

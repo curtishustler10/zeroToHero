@@ -10,16 +10,18 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const params = useSearchParams();
 
   const supabase = createSupabaseBrowserClient();
+
+  // Get error from URL params (e.g., from auth callback)
+  const urlError = params.get("error");
+  const error = urlError;
 
   const handleMagicLink = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
-    setError(null);
     const redirectTo = `${window.location.origin}/auth/callback`;
 
     const { error: signError } = await supabase.auth.signInWithOtp({
@@ -28,7 +30,10 @@ function LoginForm() {
     });
 
     if (signError) {
-      setError(signError.message);
+      // Redirect to show error in URL
+      const url = new URL(window.location.href);
+      url.searchParams.set("error", signError.message);
+      window.location.href = url.toString();
     } else {
       setMessage("Check your email for the magic link.");
     }
