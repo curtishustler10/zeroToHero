@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Dumbbell, Home, List, NotebookPen, Wallet, User } from "lucide-react";
+import { Dumbbell, Home, List, NotebookPen } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home", icon: Home },
   { href: "/goals", label: "Goals", icon: List },
   { href: "/journal", label: "Journal", icon: NotebookPen },
   { href: "/gym", label: "Gym", icon: Dumbbell },
-  { href: "/account", label: "You", icon: User },
 ];
 
 export default function NavBar() {

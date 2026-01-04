@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Check, Edit3, Plus, User, X } from "lucide-react";
 
 const summary = { daily: "4/5", weekly: "70%", monthly: "70%", total: "70%" };
@@ -16,9 +17,13 @@ export default function Home() {
           <h1 className="text-2xl font-semibold">Zero To Hero</h1>
           <p className="text-xs text-[--muted]">Supabase · personal</p>
         </div>
-        <button className="rounded-full border border-gray-200 bg-white p-2 shadow-sm">
+        <Link
+          href="/account"
+          className="rounded-full border border-gray-200 bg-white p-2 shadow-sm"
+          aria-label="Open account settings"
+        >
           <User className="h-5 w-5" />
-        </button>
+        </Link>
       </header>
 
       <section className="card p-4">
