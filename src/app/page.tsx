@@ -45,8 +45,9 @@ export default function Home() {
           {accounts.map((account) => (
             <DataCard key={account.title} title={account.title} value={account.amount} sub={account.sub} />
           ))}
-          <ListCard title="Recurring charges" items={recurringCharges} showCadence />
-          <BulletCard title="Weekly goals" items={weeklyGoals} />
+          <div className="col-span-2">
+            <ListCard title="Recurring charges" items={recurringCharges} showCadence />
+          </div>
         </div>
         <div className="mt-3 flex items-center gap-3 text-[11px] font-semibold text-gray-600">
           <div className="flex items-center gap-1">
@@ -57,6 +58,18 @@ export default function Home() {
             <span className="h-2 w-4 rounded-full bg-blue-400" />
             Monthly
           </div>
+        </div>
+      </section>
+
+      <section className="card p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold text-[--foreground]">Weekly goals</p>
+          <button className="rounded-full bg-[--gray-soft] p-2 text-gray-700">
+            <Plus className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="mt-3">
+          <BulletCard title="This week" items={weeklyGoals} />
         </div>
       </section>
 
