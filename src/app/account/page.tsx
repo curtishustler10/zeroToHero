@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Database } from "@/lib/types";
 import { Loader2, Plus, Minus } from "lucide-react";
@@ -20,7 +20,13 @@ export default function AccountPage() {
 
   const fetchAccount = async () => {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      console.error("No user found");
+      setLoading(false);
+      return;
+    }
+
+    console.log("Fetching account for user:", user.id);
 
     const { data, error } = await supabase
       .from("accounts")
@@ -28,20 +34,29 @@ export default function AccountPage() {
       .eq("user_id", user.id)
       .single();
 
+    console.log("Account fetch result:", { data, error });
+
     if (error && error.code !== "PGRST116") {
       console.error("Error fetching account:", error);
+      setLoading(false);
     } else if (data) {
+      console.log("Account found:", data);
       setAccount(data);
+      setLoading(false);
     } else {
       // Create account if it doesn't exist
-      const { data: newAccount } = await supabase
+      console.log("Creating new account for user");
+      const { data: newAccount, error: insertError } = await supabase
         .from("accounts")
-        .insert({ user_id: user.id, currency: "USD" })
+        .insert({ user_id: user.id, currency: "USD", checking_balance: 0, savings_balance: 0 })
         .select()
         .single();
+
+      console.log("Account creation result:", { newAccount, insertError });
+
       if (newAccount) setAccount(newAccount);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const updateBalance = async (accountType: "checking" | "savings", amount: number) => {
@@ -63,6 +78,10 @@ export default function AccountPage() {
       if (data && data.length > 0) {
         setAccount(data[0]);
         alert(`Successfully ${label.toLowerCase()}ed $${Math.abs(amount).toFixed(2)}`);
+      } else {
+        console.warn("No data returned from RPC");
+        // Refresh account data
+        await fetchAccount();
       }
     } catch (error: any) {
       console.error("Update balance error:", error); // Debug

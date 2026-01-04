@@ -1,6 +1,5 @@
--- RPC function to update account balance (checking or savings)
--- Takes a signed delta (positive for add, negative for withdraw)
--- Creates a transaction record and returns the updated account
+-- Fix ambiguous column reference in update_account_balance function
+-- This replaces the function with fully qualified column names
 
 CREATE OR REPLACE FUNCTION update_account_balance(
   p_account_type TEXT,
@@ -49,7 +48,7 @@ BEGIN
     WHERE accounts.user_id = v_user_id;
   END IF;
 
-  -- Update the appropriate balance
+  -- Update the appropriate balance (with fully qualified column names)
   IF p_account_type = 'checking' THEN
     UPDATE accounts
     SET checking_balance = accounts.checking_balance + p_amount
