@@ -1,9 +1,9 @@
 'use client';
 
 import { FormEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { ArrowLeft, CheckCircle2, Loader2, Mail, ShieldCheck, XCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Loader2, Mail, XCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -32,52 +32,6 @@ export default function LoginPage() {
       setError(signError.message);
     } else {
       setMessage("Check your email for the magic link.");
-    }
-    setLoading(false);
-  };
-
-  const handlePasskeySignIn = async () => {
-    setLoading(true);
-    setMessage(null);
-    setError(null);
-    const { error: signError } = await supabase.auth.signInWithPasskey();
-    if (signError) {
-      setError(signError.message);
-    } else {
-      router.push("/");
-    }
-    setLoading(false);
-  };
-
-  const handlePasskeyRegister = async () => {
-    setLoading(true);
-    setMessage(null);
-    setError(null);
-    const { data, error: signError } = await supabase.auth.signUp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-
-    if (signError) {
-      setError(signError.message);
-      setLoading(false);
-      return;
-    }
-
-    if (data.session) {
-      const { error: passkeyError } = await supabase.auth.mfa.enroll({
-        friendlyName: "Passkey",
-        factorType: "passkey",
-      });
-      if (passkeyError) {
-        setError(passkeyError.message);
-      } else {
-        setMessage("Passkey registered. You can now sign in with passkey.");
-      }
-    } else {
-      setMessage("Check your email to complete sign-up, then register a passkey.");
     }
     setLoading(false);
   };
@@ -121,27 +75,6 @@ export default function LoginPage() {
             Send magic link
           </button>
         </form>
-
-        <div className="mt-4 space-y-2">
-          <button
-            type="button"
-            disabled={loading}
-            onClick={handlePasskeySignIn}
-            className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-[--foreground] hover:border-emerald-500 disabled:opacity-60"
-          >
-            <ShieldCheck className="h-4 w-4 text-emerald-600" />
-            Sign in with passkey
-          </button>
-          <button
-            type="button"
-            disabled={loading}
-            onClick={handlePasskeyRegister}
-            className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-[--foreground] hover:border-emerald-500 disabled:opacity-60"
-          >
-            <ShieldCheck className="h-4 w-4 text-emerald-600" />
-            Register passkey
-          </button>
-        </div>
 
         {message && (
           <div className="mt-4 flex items-center gap-2 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
