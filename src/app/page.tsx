@@ -58,22 +58,21 @@ export default function Home() {
             Monthly
           </div>
         </div>
+      </section>
 
-        <div className="mt-4 border-t border-gray-200 pt-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-semibold text-[--foreground]">Habits tracker</p>
-            <button className="rounded-full bg-[--gray-soft] px-3 py-1 text-xs font-semibold text-gray-700">
-              + Add
-            </button>
-          </div>
-          <div className="mt-2 grid grid-cols-4 text-center text-xs font-semibold text-gray-600">
-            <SummaryCell label="D" value={summary.daily} bordered={false} />
-            <SummaryCell label="W" value={summary.weekly} />
-            <SummaryCell label="M" value={summary.monthly} />
-            <SummaryCell label="T" value={summary.total} />
-          </div>
+      <section className="card p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold text-[--foreground]">Habits tracker</p>
+          <button className="rounded-full bg-[--gray-soft] px-3 py-1 text-xs font-semibold text-gray-700">
+            + Add
+          </button>
         </div>
-
+        <div className="mt-3 grid grid-cols-4 text-center text-xs font-semibold text-gray-600">
+          <SummaryCell label="D" value={summary.daily} bordered={false} />
+          <SummaryCell label="W" value={summary.weekly} />
+          <SummaryCell label="M" value={summary.monthly} />
+          <SummaryCell label="T" value={summary.total} />
+        </div>
         <div className="mt-4">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-sm font-semibold text-[--foreground]">Daily habits</p>
