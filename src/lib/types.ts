@@ -821,7 +821,23 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      update_account_balance: {
+        Args: {
+          p_account_type: string;
+          p_amount: number;
+          p_label?: string | null;
+          p_note?: string | null;
+        };
+        Returns: {
+          id: string;
+          user_id: string;
+          checking_balance: number;
+          savings_balance: number;
+          currency: string;
+        }[];
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };
