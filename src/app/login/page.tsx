@@ -1,17 +1,16 @@
 'use client';
 
-import { FormEvent, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { FormEvent, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { ArrowLeft, CheckCircle2, Loader2, Mail, XCircle } from "lucide-react";
 import Link from "next/link";
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
   const params = useSearchParams();
 
   const supabase = createSupabaseBrowserClient();
@@ -90,5 +89,23 @@ export default function LoginPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="mx-auto flex min-h-screen max-w-[480px] flex-col justify-center px-4 py-10 text-[--foreground]">
+        <div className="card p-5">
+          <p className="text-xs font-semibold uppercase text-[--muted]">Zero To Hero</p>
+          <h1 className="mt-1 text-2xl font-semibold">Sign in</h1>
+          <div className="mt-4 flex items-center justify-center py-8">
+            <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+          </div>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }
