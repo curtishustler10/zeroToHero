@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, Edit3, Plus, User, X } from "lucide-react";
+import { Check, Clock3, Edit3, Plus, User, X } from "lucide-react";
 
 const summary = { daily: "4/5", weekly: "70%", monthly: "70%", total: "70%" };
 
@@ -47,6 +47,16 @@ export default function Home() {
           ))}
           <ListCard title="Recurring charges" items={recurringCharges} showCadence />
           <BulletCard title="Weekly goals" items={weeklyGoals} />
+        </div>
+        <div className="mt-3 flex items-center gap-3 text-[11px] font-semibold text-gray-600">
+          <div className="flex items-center gap-1">
+            <span className="h-2 w-4 rounded-full bg-emerald-400" />
+            Weekly
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="h-2 w-4 rounded-full bg-blue-400" />
+            Monthly
+          </div>
         </div>
 
         <div className="mt-4 border-t border-gray-200 pt-4">
@@ -154,16 +164,23 @@ function ListCard({ title, items, showCadence = false }: { title: string; items:
         {items.map((item) => (
           <div key={item.label} className="flex items-center justify-between text-sm font-semibold">
             <div className="flex items-center gap-2">
-              <span className="text-[--foreground]">{item.label}</span>
               {showCadence && item.cadence && (
-                <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-semibold uppercase text-gray-600">
-                  {item.cadence}
-                </span>
+                <span
+                  className={`h-6 w-1 rounded-full ${item.cadence === "Weekly" ? "bg-emerald-400" : "bg-blue-400"}`}
+                  aria-hidden
+                />
               )}
+              <span className="text-[--foreground]">{item.label}</span>
             </div>
             <span className="text-gray-600">
               {item.amount}
-              {item.status ? ` · ${item.status}` : ""}
+              {item.status === "upcoming" ? (
+                <Clock3 className="ml-2 inline h-4 w-4 text-gray-500" />
+              ) : item.status ? (
+                ` · ${item.status}`
+              ) : (
+                ""
+              )}
             </span>
           </div>
         ))}
