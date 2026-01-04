@@ -14,34 +14,14 @@ const accounts = [
   { title: "Savings", amount: "$1,820.00", sub: "Goal: $5,000" },
 ];
 
-const weeklyCharges = [
-  { label: "Groceries", amount: "$125", status: "upcoming" },
-  { label: "Therapy", amount: "$90", status: "paid" },
-];
-
-const monthlyCharges = [
-  { label: "Rent", amount: "$1,400", status: "upcoming" },
-  { label: "Internet", amount: "$70", status: "upcoming" },
+const recurringCharges = [
+  { label: "Groceries", amount: "$125", status: "upcoming", cadence: "Weekly" },
+  { label: "Therapy", amount: "$90", status: "paid", cadence: "Weekly" },
+  { label: "Rent", amount: "$1,400", status: "upcoming", cadence: "Monthly" },
+  { label: "Internet", amount: "$70", status: "upcoming", cadence: "Monthly" },
 ];
 
 const weeklyGoals = ["Gym 3×", "Meditation 5×", "No cigarettes", "Sleep avg 7h"];
-
-const goals = [
-  { name: "Savings → $5,000", progress: "36%" },
-  { name: "Target weight 68kg", progress: "72kg → 68kg" },
-  { name: "30 days weed-free", progress: "14 / 30 days" },
-];
-
-const bucketItems = [
-  { title: "Iceland ring road", status: "Not started" },
-  { title: "Half-marathon", status: "In progress" },
-  { title: "Strict pull-up", status: "Done" },
-];
-
-const memories = [
-  { title: "Strict pull-up unlocked", date: "Jan 2", note: "Garage gym · photo saved" },
-  { title: "Sunrise hike", date: "Dec 12", note: "Uploaded to storage" },
-];
 
 export default function Home() {
   return (
@@ -65,8 +45,7 @@ export default function Home() {
           {accounts.map((account) => (
             <DataCard key={account.title} title={account.title} value={account.amount} sub={account.sub} />
           ))}
-          <ListCard title="Weekly charges" items={weeklyCharges} />
-          <ListCard title="Monthly charges" items={monthlyCharges} />
+          <ListCard title="Recurring charges" items={recurringCharges} showCadence />
           <BulletCard title="Weekly goals" items={weeklyGoals} />
         </div>
 
@@ -100,43 +79,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="card p-4">
-        <SectionHeader title="Goals" />
-        <div className="space-y-2">
-          {goals.map((goal) => (
-            <RowCard key={goal.name} title={goal.name} value={goal.progress} />
-          ))}
-        </div>
-      </section>
-
-      <section className="card p-4">
-        <SectionHeader title="Bucket list" />
-        <div className="space-y-2">
-          {bucketItems.map((item) => (
-            <RowCard key={item.title} title={item.title} value={item.status} />
-          ))}
-        </div>
-      </section>
-
-      <section className="card p-4">
-        <SectionHeader title="Memories" />
-        <div className="space-y-2">
-          {memories.map((memory) => (
-            <div
-              key={memory.title}
-              className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2"
-            >
-              <div>
-                <p className="text-sm font-semibold text-[--foreground]">{memory.title}</p>
-                <p className="text-xs text-[--muted]">
-                  {memory.date} · {memory.note}
-                </p>
-              </div>
-              <Check className="h-4 w-4 text-emerald-600" />
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Goals, bucket list, and memories removed on request */}
     </div>
   );
 }
@@ -198,9 +141,9 @@ function DataCard({ title, value, sub }: { title: string; value: string; sub?: s
   );
 }
 
-type ListItem = { label: string; amount: string; status?: string };
+type ListItem = { label: string; amount: string; status?: string; cadence?: string };
 
-function ListCard({ title, items }: { title: string; items: ListItem[] }) {
+function ListCard({ title, items, showCadence = false }: { title: string; items: ListItem[]; showCadence?: boolean }) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-3 shadow-sm">
       <div className="flex items-center justify-between">
@@ -210,7 +153,14 @@ function ListCard({ title, items }: { title: string; items: ListItem[] }) {
       <div className="mt-2 space-y-1">
         {items.map((item) => (
           <div key={item.label} className="flex items-center justify-between text-sm font-semibold">
-            <span className="text-[--foreground]">{item.label}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-[--foreground]">{item.label}</span>
+              {showCadence && item.cadence && (
+                <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-semibold uppercase text-gray-600">
+                  {item.cadence}
+                </span>
+              )}
+            </div>
             <span className="text-gray-600">
               {item.amount}
               {item.status ? ` · ${item.status}` : ""}
