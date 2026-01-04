@@ -9,6 +9,40 @@ const dailyHabits = [
   { name: "Nuts-free", done: false },
 ];
 
+const accounts = [
+  { title: "Check account", amount: "$3,120.50" },
+  { title: "Savings", amount: "$1,820.00", sub: "Goal: $5,000" },
+];
+
+const weeklyCharges = [
+  { label: "Groceries", amount: "$125", status: "upcoming" },
+  { label: "Therapy", amount: "$90", status: "paid" },
+];
+
+const monthlyCharges = [
+  { label: "Rent", amount: "$1,400", status: "upcoming" },
+  { label: "Internet", amount: "$70", status: "upcoming" },
+];
+
+const weeklyGoals = ["Gym 3×", "Meditation 5×", "No cigarettes", "Sleep avg 7h"];
+
+const goals = [
+  { name: "Savings → $5,000", progress: "36%" },
+  { name: "Target weight 68kg", progress: "72kg → 68kg" },
+  { name: "30 days weed-free", progress: "14 / 30 days" },
+];
+
+const bucketItems = [
+  { title: "Iceland ring road", status: "Not started" },
+  { title: "Half-marathon", status: "In progress" },
+  { title: "Strict pull-up", status: "Done" },
+];
+
+const memories = [
+  { title: "Strict pull-up unlocked", date: "Jan 2", note: "Garage gym · photo saved" },
+  { title: "Sunrise hike", date: "Dec 12", note: "Uploaded to storage" },
+];
+
 export default function Home() {
   return (
     <div className="space-y-5">
@@ -28,11 +62,12 @@ export default function Home() {
 
       <section className="card p-4">
         <div className="grid grid-cols-2 gap-3">
-          <PlaceholderCard title="Check account" />
-          <PlaceholderCard title="Savings" />
-          <PlaceholderCard title="Weekly charges" />
-          <PlaceholderCard title="Monthly charges" />
-          <PlaceholderCard title="Weekly goals" small />
+          {accounts.map((account) => (
+            <DataCard key={account.title} title={account.title} value={account.amount} sub={account.sub} />
+          ))}
+          <ListCard title="Weekly charges" items={weeklyCharges} />
+          <ListCard title="Monthly charges" items={monthlyCharges} />
+          <BulletCard title="Weekly goals" items={weeklyGoals} />
         </div>
 
         <div className="mt-4 border-t border-gray-200 pt-4">
@@ -67,33 +102,41 @@ export default function Home() {
 
       <section className="card p-4">
         <SectionHeader title="Goals" />
-        <div className="placeholder-card" />
+        <div className="space-y-2">
+          {goals.map((goal) => (
+            <RowCard key={goal.name} title={goal.name} value={goal.progress} />
+          ))}
+        </div>
       </section>
 
       <section className="card p-4">
         <SectionHeader title="Bucket list" />
-        <div className="placeholder-card" />
+        <div className="space-y-2">
+          {bucketItems.map((item) => (
+            <RowCard key={item.title} title={item.title} value={item.status} />
+          ))}
+        </div>
       </section>
 
       <section className="card p-4">
         <SectionHeader title="Memories" />
-        <div className="placeholder-card" />
+        <div className="space-y-2">
+          {memories.map((memory) => (
+            <div
+              key={memory.title}
+              className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2"
+            >
+              <div>
+                <p className="text-sm font-semibold text-[--foreground]">{memory.title}</p>
+                <p className="text-xs text-[--muted]">
+                  {memory.date} · {memory.note}
+                </p>
+              </div>
+              <Check className="h-4 w-4 text-emerald-600" />
+            </div>
+          ))}
+        </div>
       </section>
-    </div>
-  );
-}
-
-function PlaceholderCard({ title, small }: { title: string; small?: boolean }) {
-  return (
-    <div
-      className={`placeholder-card relative p-3 text-xs font-semibold uppercase text-gray-500 ${
-        small ? "min-h-[90px]" : ""
-      }`}
-    >
-      <div className="absolute right-2 top-2 rounded-full border border-gray-300 bg-white/80 p-1">
-        <Edit3 className="h-3.5 w-3.5 text-gray-500" />
-      </div>
-      <span className="block">{title}</span>
     </div>
   );
 }
@@ -138,6 +181,71 @@ function SectionHeader({ title }: { title: string }) {
       <button className="rounded-full bg-[--gray-soft] p-2 text-gray-700">
         <Plus className="h-4 w-4" />
       </button>
+    </div>
+  );
+}
+
+function DataCard({ title, value, sub }: { title: string; value: string; sub?: string }) {
+  return (
+    <div className="relative rounded-2xl border border-gray-200 bg-white p-3 shadow-sm">
+      <div className="absolute right-2 top-2 rounded-full border border-gray-200 bg-white/80 p-1">
+        <Edit3 className="h-3.5 w-3.5 text-gray-500" />
+      </div>
+      <p className="text-xs font-semibold uppercase text-gray-500">{title}</p>
+      <p className="mt-1 text-lg font-semibold text-[--foreground]">{value}</p>
+      {sub && <p className="text-xs text-[--muted]">{sub}</p>}
+    </div>
+  );
+}
+
+type ListItem = { label: string; amount: string; status?: string };
+
+function ListCard({ title, items }: { title: string; items: ListItem[] }) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-3 shadow-sm">
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-semibold uppercase text-gray-500">{title}</p>
+        <Edit3 className="h-3.5 w-3.5 text-gray-500" />
+      </div>
+      <div className="mt-2 space-y-1">
+        {items.map((item) => (
+          <div key={item.label} className="flex items-center justify-between text-sm font-semibold">
+            <span className="text-[--foreground]">{item.label}</span>
+            <span className="text-gray-600">
+              {item.amount}
+              {item.status ? ` · ${item.status}` : ""}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BulletCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-3 shadow-sm">
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-semibold uppercase text-gray-500">{title}</p>
+        <Edit3 className="h-3.5 w-3.5 text-gray-500" />
+      </div>
+      <ul className="mt-2 space-y-1 text-sm font-semibold text-[--foreground]">
+        {items.map((item) => (
+          <li key={item} className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function RowCard({ title, value }: { title: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2">
+      <p className="text-sm font-semibold text-[--foreground]">{title}</p>
+      <span className="text-xs font-semibold text-gray-600">{value}</span>
     </div>
   );
 }
