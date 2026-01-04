@@ -13,7 +13,8 @@ RETURNS TABLE (
   user_id UUID,
   checking_balance NUMERIC,
   savings_balance NUMERIC,
-  currency TEXT
+  currency TEXT,
+  created_at TIMESTAMP WITH TIME ZONE
 )
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -90,7 +91,8 @@ BEGIN
     accounts.user_id,
     accounts.checking_balance,
     accounts.savings_balance,
-    accounts.currency
+    accounts.currency,
+    accounts.created_at
   FROM accounts
   WHERE accounts.user_id = v_user_id;
 END;

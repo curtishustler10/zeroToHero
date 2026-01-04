@@ -835,6 +835,7 @@ export interface Database {
           checking_balance: number;
           savings_balance: number;
           currency: string;
+          created_at: string;
         }[];
       };
     };
