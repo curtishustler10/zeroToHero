@@ -49,18 +49,23 @@ export default function AccountPage() {
     setUpdating(accountType);
 
     try {
+      console.log("Calling RPC with:", { p_account_type: accountType, p_amount: amount, p_label: label }); // Debug
       const { data, error } = await supabase.rpc("update_account_balance", {
         p_account_type: accountType,
         p_amount: amount,
         p_label: label,
       });
 
+      console.log("RPC response:", { data, error }); // Debug
+
       if (error) throw error;
 
       if (data && data.length > 0) {
         setAccount(data[0]);
+        alert(`Successfully ${label.toLowerCase()}ed $${Math.abs(amount).toFixed(2)}`);
       }
     } catch (error: any) {
+      console.error("Update balance error:", error); // Debug
       alert(error.message || "Failed to update balance");
     } finally {
       setUpdating(null);
@@ -68,6 +73,7 @@ export default function AccountPage() {
   };
 
   const handleQuickAmount = async (accountType: "checking" | "savings", delta: number) => {
+    console.log("Button clicked:", accountType, delta); // Debug log
     const amountStr = prompt(`Enter amount to ${delta > 0 ? "add" : "withdraw"}:`);
     if (!amountStr) return;
 
@@ -77,6 +83,7 @@ export default function AccountPage() {
       return;
     }
 
+    console.log("Calling updateBalance with:", accountType, delta * amount); // Debug log
     await updateBalance(accountType, delta * amount);
   };
 
