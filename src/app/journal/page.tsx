@@ -1,4 +1,4 @@
-import { CalendarClock, Feather, Mood, UploadCloud } from "lucide-react";
+import { CalendarClock, Feather, Smile, UploadCloud } from "lucide-react";
 
 const recentEntries = [
   {
@@ -54,7 +54,7 @@ export default function JournalPage() {
             </label>
             <div className="grid gap-3 sm:grid-cols-2">
               <label className="block">
-                <span className="text-sm font-semibold text-[--foreground]">Mood</span>
+              <span className="text-sm font-semibold text-[--foreground]">Mood</span>
                 <input
                   className="mt-2 w-full rounded-2xl border border-black/10 bg-white/60 p-3 text-sm shadow-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
                   placeholder="Calm / Focused / Energized"
@@ -114,7 +114,7 @@ export default function JournalPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[--muted]">History</p>
             <h2 className="text-2xl">Recent entries</h2>
           </div>
-          <Mood className="h-5 w-5 text-emerald-600" />
+          <Smile className="h-5 w-5 text-emerald-600" />
         </div>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {recentEntries.map((entry) => (
