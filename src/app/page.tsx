@@ -188,6 +188,8 @@ function ListCard({ title, items, showCadence = false }: { title: string; items:
               {item.amount}
               {item.status === "upcoming" ? (
                 <Clock3 className="ml-2 inline h-4 w-4 text-gray-500" />
+              ) : item.status === "paid" ? (
+                <Check className="ml-2 inline h-4 w-4 text-emerald-500" />
               ) : item.status ? (
                 ` · ${item.status}`
               ) : (
